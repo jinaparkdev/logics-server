@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-drivers-table
+      author: jina
+      changes:
+        - createTable:
+            tableName: driver
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: vehicle_number
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+                  defaultValue: "AVAILABLE"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+  - changeSet:
+      id: 001-create-indexes
+      author: system
+      changes:
+        - createIndex:
+            indexName: idx_drivers_status
+            tableName: driver
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            indexName: idx_drivers_phone_number
+            tableName: driver
+            columns:
+              - column:
+                  name: phone_number
+
