@@ -23,14 +23,14 @@ data class CreateUserRequest(
         regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
         message = "비밀번호는 대문자, 소문자, 숫자를 모두 포함해야 합니다"
     )
-    val password: String,
+    val password: String
 )
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 class UserController(private val service: UserService) {
 
-    @PostMapping
+    @PostMapping("/admin/user")
     suspend fun createUser(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<User> {
 
         val (loginId, password) = request
