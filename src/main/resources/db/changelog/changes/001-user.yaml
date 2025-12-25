@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-user-table
+      author: jina
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: login_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(50)
+                  defaultValue: Driver
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: idx_user_login_id
+            tableName: user
+            columns:
+              - column:
+                  name: login_id
+        - createIndex:
+            indexName: idx_user_role
+            tableName: user
+            columns:
+              - column:
+                  name: role
