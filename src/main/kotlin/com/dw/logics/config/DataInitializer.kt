@@ -35,7 +35,7 @@ class DataInitializer : ApplicationRunner {
             UserEntity.new {
                 loginId = adminLoginId
                 password = hashedPassword
-                role = UserRole.Admin
+                role = UserRole.Admin.name
             }
 
             logger.info("관리자 계정 생성이 완료되었습니다: $adminLoginId")

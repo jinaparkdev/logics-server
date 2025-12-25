@@ -11,7 +11,7 @@ object UserTable : LongIdTable("user") {
 
     val loginId = varchar("login_id", 255).uniqueIndex()
     val password = varchar("password", 255)
-    val role = enumeration("role", UserRole::class).default(UserRole.Driver)
+    val role = varchar("role", 50)
 }
 
 class UserEntity(id: EntityID<Long>) : LongEntity(id) {
@@ -19,7 +19,7 @@ class UserEntity(id: EntityID<Long>) : LongEntity(id) {
     var password by UserTable.password
     var role by UserTable.role
 
-    fun toModel() = User(id.value, loginId, role)
+    fun toModel() = User(id.value, loginId, UserRole.valueOf(role))
 
     companion object : LongEntityClass<UserEntity>(UserTable)
 }

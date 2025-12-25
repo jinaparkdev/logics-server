@@ -17,7 +17,7 @@ class UserService(private val pwEncoder: PasswordEncoder) {
         UserEntity.new {
             this.loginId = loginId
             this.password = hashedPassword
-            this.role = UserRole.Driver
+            this.role = UserRole.Driver.name
         }.toModel()
     }
 
