@@ -1,37 +1,102 @@
 # Logics Server
 
-## 기술 스택
-- JDK 21 (Gradle toolchain)
-- Kotlin 2.2.21
-- Spring Boot 3.2.0 
-- ORM: JetBrains Exposed 
-- DB 마이그레이션: Liquibase
-- 데이터베이스: PostgreSQL 17 
+Spring Boot와 Kotlin 기반의 백엔드 API 서버입니다.
 
-## 사전 준비물
-- `docker compose` 명령을 사용할 수 있는 Docker Desktop 혹은 Docker Engine
-- 프로젝트의 Gradle toolchain과 동일한 JDK 21
-- 실행 권한이 설정된 Gradle Wrapper(`./gradlew`)
+## 📚 기술 스택
 
-## 로컬 개발 워크플로
-1. **PostgreSQL 컨테이너 기동**
-   ```bash
-   cd docker
-   docker compose up -d db
-   ```
-   컨테이너는 `localhost:5432`를 개방하며, 데이터베이스/계정 정보는 `src/main/resources/application.yml`에 정의된 `logics_db` / `postgres` / `postgres`를 그대로 사용합니다.
+### 코어
+- **Language**: Kotlin 2.2.21
+- **Runtime**: JDK 21 (Gradle Toolchain)
+- **Framework**: Spring Boot 3.2.0
+  - Spring Web
+  - Spring Security
+  - Spring Validation
 
-2. **Spring Boot 서버 실행**
-   ```bash
-   cd ..
-   ./gradlew bootRun
-   ```
-   Gradle이 Kotlin 코드를 빌드하고 Liquibase 마이그레이션을 적용한 뒤 기본 포트(`8080`)에서 애플리케이션을 구동합니다.
+### 데이터베이스
+- **Database**: PostgreSQL 17 (Alpine)
+- **ORM**: JetBrains Exposed 0.47.0
+- **Migration**: Liquibase
+- **Connection Pool**: HikariCP
 
-3. **작업 종료 후 컨테이너 정리**
-   ```bash
-   cd docker
-   docker compose down
-   ```
+### 빌드 & 개발
+- **Build Tool**: Gradle 8.x (Kotlin DSL)
+- **Dev Tools**: Spring Boot DevTools
+- **Containerization**: Docker Compose
 
-> 완전히 초기화하고 싶다면 `docker volume rm logics_db_data`로 볼륨을 제거한 뒤 다시 1단계를 수행하세요.
+## 🚀 빠른 시작
+
+### 사전 요구사항
+- Docker Desktop 또는 Docker Engine (docker compose 지원)
+- JDK 21 (프로젝트는 Gradle Toolchain을 통해 자동 다운로드)
+
+### 1. 데이터베이스 시작
+PostgreSQL 컨테이너를 백그라운드로 실행합니다:
+
+```bash
+docker compose -f docker/docker-compose.yml up -d
+```
+
+> **데이터베이스 접속 정보**
+> - Host: `localhost:5432`
+> - Database: `logics_db`
+> - User: `postgres`
+> - Password: `postgres`
+
+### 2. 애플리케이션 실행
+프로젝트 루트 디렉토리에서 다음 명령을 실행합니다:
+
+```bash
+./gradlew bootRun
+```
+
+애플리케이션은 `http://localhost:8080`에서 실행됩니다.
+
+> Liquibase가 자동으로 데이터베이스 스키마를 마이그레이션합니다.
+
+## 🛠️ 개발 가이드
+
+### 프로젝트 구조
+```
+src/main/kotlin/com/dw/logics/
+├── config/          # Spring 설정 클래스
+├── controller/      # REST API 컨트롤러
+├── domain/          # 도메인 모델
+├── entity/          # Exposed 엔티티
+├── service/         # 비즈니스 로직
+└── utils/           # 유틸리티 함수
+```
+
+### 빌드 명령어
+```bash
+# 빌드
+./gradlew build
+
+# 테스트
+./gradlew test
+
+# JAR 파일 생성
+./gradlew bootJar
+
+# 의존성 확인
+./gradlew dependencies
+```
+
+### 환경 설정
+주요 설정은 `src/main/resources/application.yml`에서 관리되며, 환경변수로 오버라이드할 수 있습니다.
+
+## 🧹 정리
+
+### 컨테이너 종료
+```bash
+docker compose -f docker/docker-compose.yml down
+```
+
+### 데이터베이스 초기화
+볼륨을 포함한 완전한 초기화가 필요한 경우:
+
+```bash
+docker compose -f docker/docker-compose.yml down -v
+# 또는
+docker volume rm logics_db_data
+```
+
