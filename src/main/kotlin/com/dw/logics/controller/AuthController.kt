@@ -1,6 +1,6 @@
 package com.dw.logics.controller
 
-import com.dw.logics.config.JwtTokenProvider
+import com.dw.logics.handler.JwtTokenProvider
 import com.dw.logics.domain.User
 import com.dw.logics.service.UserService
 import jakarta.validation.constraints.NotBlank
