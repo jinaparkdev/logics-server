@@ -1,4 +1,4 @@
-package com.dw.logics.config
+package com.dw.logics.handler
 
 import com.dw.logics.domain.UserRole
 import com.dw.logics.entity.UserEntity

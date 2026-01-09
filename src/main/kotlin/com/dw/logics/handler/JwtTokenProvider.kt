@@ -1,9 +1,11 @@
-package com.dw.logics.config
+package com.dw.logics.handler
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.slf4j.LoggerFactory
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.crypto.SecretKey
@@ -83,3 +85,11 @@ class JwtTokenProvider(
     }
 }
 
+@ConfigurationProperties(prefix = "jwt")
+@Configuration
+data class JwtProperties(
+    var issuer: String = "logics-server",
+    var refreshTokenExpiration: Long = 604800000,
+    var accessTokenExpiration: Long = 3600000,
+    var secret: String = "",
+)

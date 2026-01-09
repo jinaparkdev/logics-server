@@ -32,7 +32,6 @@ class UserController(private val service: UserService) {
 
     @PostMapping("/admin/user")
     suspend fun createUser(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<User> {
-
         val (loginId, password) = request
         val user = service.createUser(loginId, password)
         return ResponseEntity.status(HttpStatus.CREATED).body(user)
