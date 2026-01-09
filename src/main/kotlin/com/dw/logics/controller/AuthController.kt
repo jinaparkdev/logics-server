@@ -1,8 +1,9 @@
 package com.dw.logics.controller
 
-import com.dw.logics.handler.JwtTokenProvider
 import com.dw.logics.domain.User
+import com.dw.logics.handler.JwtTokenProvider
 import com.dw.logics.service.UserService
+import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
@@ -37,7 +38,7 @@ class AuthController(
 ) {
 
     @PostMapping("/sign-up")
-    suspend fun signUp(@RequestBody req: SignUpRequest): ResponseEntity<Void> {
+    suspend fun signUp(@RequestBody @Valid req: SignUpRequest): ResponseEntity<Void> {
         userService.createUser(req.loginId, req.password)
         return ResponseEntity.ok().build()
     }
@@ -45,9 +46,7 @@ class AuthController(
     @PostMapping("/sign-in")
     suspend fun signIn(@RequestBody req: SignInRequest): ResponseEntity<SignInResponse> {
         val (loginId, password) = req
-
-        //TODO Exception Custom
-        val user = userService.getUser(loginId, password) ?: return ResponseEntity.badRequest().build()
+        val user = userService.getUser(loginId, password)
         val accessToken = jwtTokenProvider.generateAccessToken(user.id.toString(), listOf(user.role.name))
         val refreshToken = jwtTokenProvider.generateRefreshToken(user.id.toString())
         return ResponseEntity.ok(SignInResponse(accessToken, refreshToken, user))
