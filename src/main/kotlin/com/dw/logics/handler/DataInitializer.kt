@@ -7,10 +7,12 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
+@ConditionalOnProperty(name = ["app.data-initializer.enabled"], havingValue = "true", matchIfMissing = true)
 class DataInitializer : ApplicationRunner {
 
     private val logger = LoggerFactory.getLogger(DataInitializer::class.java)
@@ -44,4 +46,3 @@ class DataInitializer : ApplicationRunner {
         }
     }
 }
-
