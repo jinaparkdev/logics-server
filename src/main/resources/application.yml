@@ -40,5 +40,11 @@ logging:
     root: INFO
     com.dw.logics: DEBUG
     org.springframework.web: INFO
+    org.springframework.security: DEBUG
     Exposed: DEBUG
 
+delivery:
+  partners:
+    oms:
+      base-url: ${OMS_BASE_URL:https://oms-dev-api.cartamobility.com}
+      delivery-lookup-path: ${OMS_LOOKUP_PATH:/api/lmdapi/aloa/trackingInfo/invoice-no}

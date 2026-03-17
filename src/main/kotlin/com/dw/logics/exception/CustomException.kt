@@ -38,3 +38,10 @@ class InvalidExternalApiEndpointException(
     ErrorCode.INVALID_INPUT,
     "허용되지 않은 외부 API endpoint 입니다. endpoint=${endpoint.take(300)}"
 )
+
+class UnsupportedDeliveryPartnerException(
+    partnerCode: String
+) : CustomException(
+    ErrorCode.INVALID_INPUT,
+    "지원하지 않는 배송 협력사입니다. partnerCode=${partnerCode.take(100)}"
+)

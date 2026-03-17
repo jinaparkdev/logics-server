@@ -58,7 +58,7 @@ class JwtTokenProvider(
             getClaims(token)
             true
         } catch (e: Exception) {
-            logger.info("토큰 검증 중 예외 발생:{}", { e.printStackTrace() })
+            logger.info("토큰 검증 중 예외 발생: {}", e.message)
             false
         }
     }

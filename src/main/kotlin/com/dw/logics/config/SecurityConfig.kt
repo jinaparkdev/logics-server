@@ -1,6 +1,7 @@
 package com.dw.logics.config
 
 import com.dw.logics.handler.JwtAuthenticationFilter
+import jakarta.servlet.DispatcherType
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -30,9 +31,11 @@ class SecurityConfig(
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth
+                    .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.ERROR).permitAll()
                     .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("/api/system/**").permitAll()
                     .requestMatchers("/api/admin/**").hasRole("Admin")
+                    .requestMatchers("/api/deliveries/**").hasAnyRole("Driver", "Admin")
                     .anyRequest().authenticated()
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
