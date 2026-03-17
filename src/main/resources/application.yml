@@ -47,4 +47,6 @@ delivery:
   partners:
     oms:
       base-url: ${OMS_BASE_URL:https://oms-dev-api.cartamobility.com}
+      api-key-header-name: ${OMS_API_KEY_HEADER_NAME:}
+      api-key: ${OMS_API_KEY:}
       delivery-lookup-path: ${OMS_LOOKUP_PATH:/api/lmdapi/aloa/trackingInfo/invoice-no}

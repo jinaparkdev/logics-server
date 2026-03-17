@@ -9,5 +9,7 @@ data class DeliveryPartnerProperties(
 
 data class DeliveryPartnerClientProperties(
     val baseUrl: String,
-    val deliveryLookupPath: String
+    val deliveryLookupPath: String,
+    val apiKeyHeaderName: String? = null,
+    val apiKey: String? = null
 )

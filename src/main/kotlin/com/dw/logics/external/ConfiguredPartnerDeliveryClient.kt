@@ -19,7 +19,14 @@ class ConfiguredPartnerDeliveryClient(
             ExternalApiRequest(
                 method = HttpMethod.POST,
                 endpoint = properties.deliveryLookupPath,
-                headers = mapOf("Content-Type" to "application/json"),
+                headers = buildMap {
+                    put("Content-Type", "application/json")
+                    val headerName = properties.apiKeyHeaderName
+                    val apiKey = properties.apiKey
+                    if (!headerName.isNullOrBlank() && !apiKey.isNullOrBlank()) {
+                        put(headerName, apiKey)
+                    }
+                },
                 body = PartnerDeliveryTrackingLookupRequest(laasInvoiceNoList)
             )
         ) { raw ->
