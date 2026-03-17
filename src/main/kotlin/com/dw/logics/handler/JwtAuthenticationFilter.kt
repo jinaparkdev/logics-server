@@ -22,6 +22,7 @@ class JwtAuthenticationFilter(
     ) {
         try {
             val token = extractTokenFromRequest(request)
+            logger.debug("JWT 필터 실행 - URI: ${request.requestURI}, token: ${if (token != null) "존재" else "없음"}")
 
             if (token != null && jwtTokenProvider.validateToken(token)) {
                 val userId = jwtTokenProvider.getUserIdFromToken(token)

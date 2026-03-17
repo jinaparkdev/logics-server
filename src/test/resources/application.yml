@@ -23,3 +23,9 @@ spring:
 app:
   data-initializer:
     enabled: false
+
+delivery:
+  partners:
+    sample:
+      base-url: http://localhost:18080
+      delivery-lookup-path: /api/v1/deliveries/lookup
