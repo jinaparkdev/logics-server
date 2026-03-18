@@ -1,0 +1,12 @@
+.git
+.gradle
+.idea
+.kotlin
+build
+out
+docker
+mock-server
+*.iml
+*.log
+README.md
+HELP.md
